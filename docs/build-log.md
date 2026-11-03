@@ -61,9 +61,21 @@ python -m pmunity convert <data-copy> --config convert.json     # in place
 
 `convert.json`: steps `shaders,textures,settings,audio,quality`; `shaders.from = ["d3d11"]`;
 `settings.graphics_apis = [11]` (GLES3); `quality.profile = handheld` (the panel is 720p and the
-device has 963 MB of RAM). Result: 34 MB of DXT textures converted, all 40 serialized files had
-their D3D11 shaders translated to GLES3 by HLSLcc, QualitySettings capped to
-`pixel_lights=1,shadows=1,shadow_resolution=1,shadow_cascades=2,msaa=0,anisotropic=1,soft_particles=0`.
+device has 963 MB of RAM). Run output, in full:
+
+```
+shaders: 42 shaders given GLES3 programs (175 programs, 362 subprograms) in 5 files; 1 not translatable
+shaders: from Direct3D 11: 42 of 43 shaders (175 programs); 1 SubShaders left out
+         (Hidden/BlitToDepth_MSAA pass 0: textureSamples() is not in GLSL ES)
+textures: guided_astc is not installed: every block is searched (mode "search")
+textures: 10 converted (37 -> 12 MB), 0 atlas entries and 0 sprites follow their scaled textures
+audio: 0 clips kept compressed in memory (0.0 MiB of PCM); budget 16 MiB a scene, most a scene holds 0.0 MiB
+quality: QualitySettings: Good/Fantastic/Beautiful pixelLightCount -> 1, shadows -> 1,
+         shadowResolution 2 -> 1, Fantastic.shadowCascades 4 -> 2, anisotropicTextures -> 1,
+         Fantastic/Beautiful.softParticles -> False
+quality: run-time caps for ua_host: pixel_lights=1,shadows=1,shadow_resolution=1,
+         shadow_cascades=2,msaa=0,anisotropic=1,soft_particles=0
+```
 
 Note: `convert` must run **in place on the data copy**; a separate output directory drops
 `Managed/`, and the next step needs it (`no managed assemblies (Managed/*.dll)`).
