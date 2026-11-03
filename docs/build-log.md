@@ -137,4 +137,33 @@ hashes above are the proof. `plugins.map` on the device reads
 
 ## 7. Device test
 
-(pending — this section is updated with the real run log, `kmsgrab` capture and the frame counters)
+TrimUI Smart Pro S (SpruceOS, Mali-G57), `ua_host` launched directly with the port's environment
+(`HOME=conf`, `UA_FPS=1`, the `TRIMUI Player1` SDL mapping). 6826 frames, then `SIGTERM`:
+
+```
+[display] SDL KMSDRM: EGL 1.4 Valhall-"r32p0-01eac1" (ARM), Mali-G57, OpenGL ES 3.2 v1.r32p0-01eac1.3634895aa082dda7c3407d9f3e199919
+[display] config 9: RGBA 8888 depth 24 stencil 8 samples 0, ES3
+[display] fullscreen 1280x720, 60 Hz, swap interval 1
+[plugins] /mnt/sdcard/mmcblk1p1/Roms/ports/ragingloop/arm64/plugins.map: 3 libraries, 0 float signatures
+[plugins] plugin: lib/libplugin.so (glibc library)
+[plugins] sdkencryptedappticket: not available (DllNotFoundException at the first call)
+[plugins] steam_api: built-in stub steam
+[input] pad 0: "TRIMUI Player1" (SDL "TRIMUI Player1", 045e:028e) as Android device 1
+[fps] 60.0 fps, frame 16.7 avg / 17.2 p99 / 17.2 worst ms, late 0 hitch 0, gc 0 heap -1 MB (… 6826 total, 114 s) rss 172 MB
+[fj 23424] up: UnityMain thread exits after 6826 frames
+```
+
+Facts worth keeping:
+
+- 60.0 fps with `late 0 hitch 0` for the whole run, 172 MB RSS (the device has 963 MB).
+- `sdkencryptedappticket` is listed as unavailable; the game never calls it, so it never throws.
+  The stub only has to cover `plugin` (Kemco's `executeAPI`), which resolves.
+- `ERROR: Could not queue pageflip: -16` appears 53 times over the run (EBUSY from `SDL_GL_SwapWindow`).
+  Rendering and the frame counters are unaffected; it was produced while the frontend still owned the
+  display, so it is not yet attributed to a real KMS problem.
+- First run died at `libmain.so: No such file or directory` — the player package ships it
+  (`Variations/il2cpp/Release/Libs/arm64-v8a/libmain.so`, 6 KB), it is now in `lib/`.
+
+Not yet verified: the picture itself. `ua_host`'s own screenshot path needs GLES hooks this build
+does not have (`[frames] screenshot: no GLES functions`), so a `shot.req` in the port dir is ignored;
+a frame has to come from a `kmsgrab` capture. Until then "60 fps, 172 MB" is the render side only.
