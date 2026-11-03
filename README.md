@@ -60,3 +60,19 @@ port/                        launcher + PortMaster metadata (added at packaging)
 ```
 
 No game data is stored in this repository.
+
+## Install
+
+Download `raging-loop-portmaster-tsps.zip` (1.49 GB) from
+https://gofile.io/d/l6Qn7no5 and unzip it into the ports folder — the archive already has the
+device layout:
+
+```
+/mnt/SDCARD/Roms/ports/Raging Loop.sh
+/mnt/SDCARD/Roms/ports/gameinfo.xml
+/mnt/SDCARD/Roms/ports/ragingloop/ua_host
+/mnt/SDCARD/Roms/ports/ragingloop/arm64/…
+```
+
+`sha256 7d2163ad6323229f94f72b22c7f7123d2c4ac8dd1a5003388928b3cf7bfe5ad4` (1,494,522,285 bytes).
+Then launch "Raging Loop" from the Ports menu.
