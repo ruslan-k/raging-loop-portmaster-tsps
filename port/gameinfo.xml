@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <gameList>
   <game>
-    <path>./RagingLoop.sh</path>
+    <path>./Raging Loop.sh</path>
     <name>Raging Loop</name>
     <desc>Kemco's time-loop horror visual novel: a village, a werewolf, and a night that keeps starting over.</desc>
     <releasedate>20170101T000000</releasedate>
