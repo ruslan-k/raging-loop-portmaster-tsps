@@ -120,6 +120,21 @@ ports/ragingloop/
 ports/RagingLoop.sh           launcher (PortMaster control.txt + get_controls)
 ```
 
+### Installed payload, read back from the device (sha256, 2026-11-03)
+
+```
+5876f24f20cd68b3c2b270ebf0b1b03cd2408a724297c5782bbafede9ab7ee34  lib/libunity.so    19971888
+5d383a627c13a773418bc2da1c35470e090b2e668f6441627ab4a77ea56968eb  lib/libil2cpp.so   27291680
+eb0fda78de3146429a9d453940df1b6ab12eb52c28e8ff39415856c9c13e03ad  lib/libplugin.so       7928
+bf3079d0cdb22306c3745130271781bced7af9647600f34a326c82b5cda3e7c5  lib/libmain.so         6144
+bb1c757a489bd6fc1e002aaa78b8e31c5b22e0999140f7fa23491cbb3c05ed56  RagingLoop.apk    923337410
+```
+
+All five match the local build byte for byte. The copy to the SD card is `rsync -a`, which reports
+exit 23 on exFAT/vfat (`chown … Operation not permitted` on the temp file); the payload is unaffected —
+hashes above are the proof. `plugins.map` on the device reads
+`map plugin lib libplugin.so`, `map sdkencryptedappticket none`, `map steam_api stub steam`.
+
 ## 7. Device test
 
 (pending — this section is updated with the real run log, `kmsgrab` capture and the frame counters)
