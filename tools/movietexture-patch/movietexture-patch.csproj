@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <AssemblyName>movietexture-patch</AssemblyName>
+    <RootNamespace>movietexture-patch</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Mono.Cecil ships with the toolkit's asmpatch tool; any copy works. -->
+    <Reference Include="Mono.Cecil">
+      <HintPath>$(PortmasterUnity)/tools/asmpatch/out/Mono.Cecil.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+</Project>

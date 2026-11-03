@@ -1,0 +1,6 @@
+game/
+build/
+*.so
+*.apk
+conf/
+log.txt
